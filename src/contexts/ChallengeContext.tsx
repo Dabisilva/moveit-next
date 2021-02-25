@@ -25,13 +25,8 @@ interface ChallengesContextData {
   startNewChallenge: () => void;
   resetChallenge: () => void;
   completChallenge: () => void;
-  IsActiveButton: (value: boolean) => void;
-  getTime: (value: number) => void;
-  hasFinished: boolean;
   activeChallenge: Challenge;
   experienceToNextLevel: number;
-  time: number;
-  isActive: boolean;
 }
 
 export const ChallengesContext = createContext({} as ChallengesContextData);
@@ -41,10 +36,6 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   const [currentExperience, setCurrentExperience] = useState(0);
   const [challengesCompleted, setChallengesCompleted] = useState(0);
   const [activeChallenge, setActiveChallenge] = useState(null);
-  const [hasFinished, setHasFinished] = useState(false);
-  const [isActive, setisActive] = useState(false);
-
-  const [time, setTime] = useState(0.1 * 60);
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
 
@@ -94,14 +85,6 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     setActiveChallenge(null);
   }
 
-  function IsActiveButton(value: boolean) {
-    setisActive(value);
-  }
-
-  function getTime(value: number) {
-    setTime(value);
-  }
-
   return (
     <ChallengesContext.Provider
       value={{
@@ -113,11 +96,6 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
         activeChallenge,
         resetChallenge,
         experienceToNextLevel,
-        time,
-        hasFinished,
-        IsActiveButton,
-        isActive,
-        getTime,
         completChallenge,
       }}
     >
