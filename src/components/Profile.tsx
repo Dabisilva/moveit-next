@@ -1,10 +1,10 @@
 import { useContextChallengerData } from "../contexts/ChallengeContext";
-import styles from "../styles/components/Profile.module.css";
+import { ProfileContainer } from "../styles/components/Profile.module";
 
 export function Profile() {
   const { level } = useContextChallengerData();
   return (
-    <div className={styles.profileContainer}>
+    <ProfileContainer>
       <img src="https://github.com/Dabisilva.png" alt="Davi Barbosa" />
 
       <div>
@@ -14,6 +14,6 @@ export function Profile() {
           Level {level}
         </p>
       </div>
-    </div>
+    </ProfileContainer>
   );
 }

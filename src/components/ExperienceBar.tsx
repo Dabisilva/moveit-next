@@ -1,7 +1,9 @@
-import { useState } from "react";
 import { useContextChallengerData } from "../contexts/ChallengeContext";
 
-import styles from "../styles/components/ExperienceBar.module.css";
+import {
+  ExperienceBarHeader,
+  CurrentExperienceSpan,
+} from "../styles/components/ExperienceBar.module";
 
 export function ExperienceBar() {
   const {
@@ -14,22 +16,19 @@ export function ExperienceBar() {
 
   return (
     <>
-      <header className={styles.experienceBar}>
+      <ExperienceBarHeader>
         <span>0 xp</span>
         <div>
           <div style={{ width: `${percentToNextlevel}%` }} />
 
           {currentExperience != 0 && currentExperience != 100 && (
-            <span
-              className={styles.currentExperience}
-              style={{ left: `${percentToNextlevel}%` }}
-            >
+            <CurrentExperienceSpan style={{ left: `${percentToNextlevel}%` }}>
               {currentExperience} xp
-            </span>
+            </CurrentExperienceSpan>
           )}
         </div>
         <span>{experienceToNextLevel} xp</span>
-      </header>
+      </ExperienceBarHeader>
     </>
   );
 }

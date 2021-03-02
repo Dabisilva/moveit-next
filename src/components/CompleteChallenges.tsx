@@ -1,12 +1,12 @@
 import { useContextChallengerData } from "../contexts/ChallengeContext";
-import styles from "../styles/components/CompleteChallenges.module.css";
+import { CompletedContainer } from "../styles/components/CompleteChallenges.module";
 
 export function CompleteChallenges() {
   const { challengesCompleted } = useContextChallengerData();
   return (
-    <div className={styles.completedContainer}>
+    <CompletedContainer>
       <span>Desafios completos</span>
       <span>{challengesCompleted}</span>
-    </div>
+    </CompletedContainer>
   );
 }
