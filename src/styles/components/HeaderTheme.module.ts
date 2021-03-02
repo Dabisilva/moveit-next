@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  margin: 2rem;
-  margin-bottom: 0;
+  width: 20rem;
+  margin: 1rem 0 0 1rem;
   button {
-    width: 4rem;
+    width: 6rem;
     height: 2rem;
     background: var(--white);
     font-weight: 600;

@@ -19,7 +19,7 @@ export const HeaderTheme: React.FC<HeaderProps> = ({
   return (
     <Container>
       <button onClick={toggleTheme}>
-        {themeName === "light" ? "Escuro" : "Claro"}
+        Tema {themeName === "light" ? "Escuro" : "Claro"}
       </button>
     </Container>
   );
