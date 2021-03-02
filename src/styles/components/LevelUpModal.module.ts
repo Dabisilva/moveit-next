@@ -14,7 +14,7 @@ export const Overlay = styled.div`
 `;
 
 export const Container = styled.div`
-  background: var(--white);
+  background: var(--primary);
   width: 100%;
   max-width: 400px;
   padding: 2rem 3rem;

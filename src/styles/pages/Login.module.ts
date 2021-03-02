@@ -22,6 +22,6 @@ export const Container = styled.div`
     width: 10rem;
     height: 3rem;
     background: var(--title);
-    color: var(--white);
+    color: var(--primary);
   }
 `;

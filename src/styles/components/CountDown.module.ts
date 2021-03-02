@@ -13,7 +13,7 @@ export const CountDownContainer = styled.div`
     align-items: center;
     justify-content: space-evenly;
 
-    background: var(--white);
+    background: var(--primary);
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
     border-radius: 5px;
     font-size: 8.5rem;
@@ -48,14 +48,14 @@ export const CountDownButton = styled.button`
   justify-content: center;
 
   background: var(--blue);
-  color: var(--title);
+  color: var(--white);
 
   font-size: 1.25rem;
   font-weight: 600;
   transition: 0.2s;
 
   :disabled {
-    background: var(--white);
+    background: var(--primary);
     color: var(--text);
     cursor: not-allowed;
     border-bottom: 3px solid var(--green);
@@ -81,7 +81,7 @@ export const CountDownButtonActive = styled.button`
   font-size: 1.25rem;
   font-weight: 600;
   transition: 0.2s;
-  background: var(--white);
+  background: var(--primary);
   color: var(--title);
 
   :not(:disabled):hover {

@@ -1,5 +1,6 @@
 export const themes = {
   light: {
+    primary: "#fff",
     white: "#fff",
     background: "#f2f3f5",
     background_Modal: "rgba(218, 221, 226, 0.8)",
@@ -14,7 +15,8 @@ export const themes = {
     blue_twitter: "#2aa9e0",
   },
   dark: {
-    white: "#2c2828",
+    primary: "#2c2828",
+    white: "#fff",
     background: "#1d1d1d",
     background_Modal: "rgba(55, 57, 61, 0.8)",
     gray_line: "#afafaf",
