@@ -5,8 +5,8 @@ export const Container = styled.div`
   margin: 1rem 0 0 1rem;
   button {
     width: 6rem;
-    height: 2rem;
-    background: var(--white);
+    height: 3rem;
+    background: var(--background_Modal);
     font-weight: 600;
     color: var(--title);
   }

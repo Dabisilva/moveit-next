@@ -10,11 +10,9 @@ export default function Login() {
           <title>Login | move.it</title>
         </Head>
 
-        <button>
-          <Link href="/profile">
-            <a>Logar</a>
-          </Link>
-        </button>
+        <Link href="/profile">
+          <button>Logar</button>
+        </Link>
       </Container>
     </>
   );
