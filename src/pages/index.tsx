@@ -1,6 +1,6 @@
 import Head from "next/head";
-import Link from "next/link";
-import { Container } from "../styles/pages/Login.module";
+import { LoginForm } from "../components/LoginForm";
+import { Container, ImageDiv } from "../styles/pages/Login.module";
 
 export default function Login() {
   return (
@@ -10,9 +10,13 @@ export default function Login() {
           <title>Login | move.it</title>
         </Head>
 
-        <Link href="/profile">
-          <button>Logar</button>
-        </Link>
+        <section>
+          <ImageDiv>
+            <img src="/simbolo.svg" alt="simbolo" />
+          </ImageDiv>
+
+          <LoginForm />
+        </section>
       </Container>
     </>
   );

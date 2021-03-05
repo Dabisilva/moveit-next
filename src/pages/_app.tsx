@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <ThemeProvider theme={currentTheme}>
         <GlobalStylesModule />
-        <HeaderTheme themeName={themeName} setThemeName={setThemeName} />
+        {/* <HeaderTheme themeName={themeName} setThemeName={setThemeName} /> */}
         <Component {...pageProps} />
       </ThemeProvider>
     </>

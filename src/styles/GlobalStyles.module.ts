@@ -7,15 +7,63 @@ export default createGlobalStyle`
   box-sizing: border-box;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1280px) {
   html {
     font-size: 93.75%;
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1155px) {
   html {
-    font-size: 85.5%;
+    font-size: 87.5%;
+  }
+}
+@media (max-width: 1085px) {
+  html {
+    font-size: 80.5%;
+  }
+}
+
+@media (max-width: 992px) {
+  html {
+    font-size: 70.5%;
+  }
+}
+
+@media (max-width:  875px) {
+  html {
+    font-size: 63.5%;
+  }
+}
+
+@media (max-width: 795px ) {
+  html {
+    font-size: 57.5%;
+  }
+}
+@media (max-width: 710px ) {
+  html {
+    font-size: 50.5%;
+  }
+}
+@media (max-width: 627px ) {
+  html {
+    font-size: 45.5%;
+  }
+}
+@media (max-width: 669px ) {
+  html {
+    font-size: 40.5%;
+  }
+}
+@media (max-width: 522px ) {
+  html {
+    font-size: 35.5%;
+  }
+}
+@media (max-width: 462px ) {
+  html {
+    font-size: 30.5%;
   }
 }
 

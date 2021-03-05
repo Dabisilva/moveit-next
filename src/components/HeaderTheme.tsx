@@ -1,5 +1,5 @@
 import { useContextThemeData } from "../contexts/ThemeContext";
-import { Container } from "../styles/components/HeaderTheme.module";
+import { ButtonTogle } from "../styles/components/HeaderTheme.module";
 import { ThemeName } from "../styles/themes";
 
 interface HeaderProps {
@@ -17,10 +17,8 @@ export const HeaderTheme: React.FC<HeaderProps> = ({
     setThemeName(themeName === "light" ? "dark" : "light");
   }
   return (
-    <Container>
-      <button onClick={toggleTheme}>
-        Tema {themeName === "light" ? "Escuro" : "Claro"}
-      </button>
-    </Container>
+    <ButtonTogle onClick={toggleTheme}>
+      Tema {themeName === "light" ? "Escuro" : "Claro"}
+    </ButtonTogle>
   );
 };
