@@ -56,16 +56,7 @@ export default createGlobalStyle`
     font-size: 40.5%;
   }
 }
-@media (max-width: 522px ) {
-  html {
-    font-size: 35.5%;
-  }
-}
-@media (max-width: 462px ) {
-  html {
-    font-size: 30.5%;
-  }
-}
+
 
 body {
   background: var(--background);

@@ -7,16 +7,14 @@ export default function Login() {
     <>
       <Container>
         <Head>
-          <title>Login | move.it</title>
+          <title>Home | move.it</title>
         </Head>
 
-        <section>
-          <ImageDiv>
-            <img src="/simbolo.svg" alt="simbolo" />
-          </ImageDiv>
+        <ImageDiv>
+          <img src="/simbolo.svg" alt="simbolo" />
+        </ImageDiv>
 
-          <LoginForm />
-        </section>
+        <LoginForm />
       </Container>
     </>
   );
