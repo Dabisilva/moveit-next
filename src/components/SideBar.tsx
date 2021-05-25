@@ -2,8 +2,8 @@ import {
   Container,
   ButtonHome,
   ButtonIconHome,
-  ButtonLeadBoard,
-  ButtonIconLeadBoard,
+  ButtonLeaderBoard,
+  ButtonIconLeaderBoard,
 } from "../styles/components/SideBar.module";
 import Router from "next/router";
 
@@ -15,8 +15,8 @@ export function SideBar({ namePath }: SideBarProps) {
   function handleGoToHome() {
     Router.push("/profile");
   }
-  function handleGoToLeadBoard() {
-    Router.push("/leadboard");
+  function handleGoToLeaderBoard() {
+    Router.push("/leaderboard");
   }
   return (
     <>
@@ -30,12 +30,12 @@ export function SideBar({ namePath }: SideBarProps) {
           >
             <ButtonIconHome />
           </ButtonHome>
-          <ButtonLeadBoard
-            onClick={handleGoToLeadBoard}
-            className={namePath === "leadboard" ? "active" : ""}
+          <ButtonLeaderBoard
+            onClick={handleGoToLeaderBoard}
+            className={namePath === "leaderboard" ? "active" : ""}
           >
-            <ButtonIconLeadBoard />
-          </ButtonLeadBoard>
+            <ButtonIconLeaderBoard />
+          </ButtonLeaderBoard>
         </div>
 
         <div />

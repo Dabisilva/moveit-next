@@ -38,22 +38,22 @@ export default createGlobalStyle`
 
 @media (max-width: 795px ) {
   html {
-    font-size: 57.5%;
+    font-size: 60.5%;
   }
 }
 @media (max-width: 710px ) {
   html {
-    font-size: 50.5%;
+    font-size: 57.5%;
   }
 }
 @media (max-width: 627px ) {
   html {
-    font-size: 45.5%;
+    font-size: 55.5%;
   }
 }
 @media (max-width: 669px ) {
   html {
-    font-size: 40.5%;
+    font-size: 50.5%;
   }
 }
 

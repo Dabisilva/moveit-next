@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { FiHome, FiAward } from "react-icons/fi";
 export const Container = styled.aside`
-  grid-area: SB;
+  grid-area: "SB";
 
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  max-width: 112px;
+  max-width: 7rem;
   height: 100vh;
   padding-top: 1rem;
   background: var(--primary);
@@ -20,6 +20,10 @@ export const Container = styled.aside`
     flex-direction: column;
     justify-content: space-around;
     height: 120px;
+  }
+
+  @media (max-width: 500px) {
+    display: none;
   }
 `;
 
@@ -53,7 +57,7 @@ export const ButtonIconHome = styled(FiHome)`
   stroke: var(--white);
 `;
 
-export const ButtonLeadBoard = styled.button`
+export const ButtonLeaderBoard = styled.button`
   width: 100px;
   height: 2rem;
   background: none;
@@ -76,7 +80,7 @@ export const ButtonLeadBoard = styled.button`
     }
   }
 `;
-export const ButtonIconLeadBoard = styled(FiAward)`
+export const ButtonIconLeaderBoard = styled(FiAward)`
   width: 2rem;
   height: 2rem;
   stroke: var(--white);
