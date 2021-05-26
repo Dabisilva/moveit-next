@@ -54,7 +54,7 @@ export const ButtonHome = styled.button`
 export const ButtonIconHome = styled(FiHome)`
   width: 2rem;
   height: 2rem;
-  stroke: var(--white);
+  stroke: var(--text);
 `;
 
 export const ButtonLeaderBoard = styled.button`
@@ -83,5 +83,5 @@ export const ButtonLeaderBoard = styled.button`
 export const ButtonIconLeaderBoard = styled(FiAward)`
   width: 2rem;
   height: 2rem;
-  stroke: var(--white);
+  stroke: var(--text);
 `;

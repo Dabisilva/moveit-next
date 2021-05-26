@@ -57,11 +57,11 @@ export function LoginForm() {
               <ArrowLogo />
             </ButtonDisable>
           ) : (
-            <Link href="/profile">
-              <ButtonEneble type="submit">
-                <ArrowLogo />
-              </ButtonEneble>
-            </Link>
+            // <Link href="/profile">
+            <ButtonEneble type="submit">
+              <ArrowLogo />
+            </ButtonEneble>
+            // </Link>
           )}
         </LabelContent>
       </form>
