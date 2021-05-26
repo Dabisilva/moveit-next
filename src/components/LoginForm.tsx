@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Link from "next/link";
 import {
   LoginContainer,
@@ -15,8 +15,9 @@ export function LoginForm() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSubmit() {
-    Router.push("/profile");
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    Router.push("/home");
   }
   return (
     <LoginContainer>
@@ -33,16 +34,6 @@ export function LoginForm() {
             onChange={(text) => setName(text.target.value)}
             type="text"
           />
-
-          {/* {name.length === 0 ? (
-          <ButtonDisable disabled>
-            <ArrowLogo />
-          </ButtonDisable>
-        ) : (
-          <ButtonEneble onClick={{}}>
-            <ArrowLogo />
-          </ButtonEneble>
-        )} */}
         </LabelContent>
         <LabelContent>
           <InputContent
@@ -57,7 +48,7 @@ export function LoginForm() {
               <ArrowLogo />
             </ButtonDisable>
           ) : (
-            // <Link href="/profile">
+            // <Link href="/home">
             <ButtonEneble type="submit">
               <ArrowLogo />
             </ButtonEneble>

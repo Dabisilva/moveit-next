@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Router from "next/router";
 import {
   AccountContainer,
@@ -11,8 +11,9 @@ const pages: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
 
-  function handleSubmit() {
-    Router.push("/profile");
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    Router.push("/home");
   }
 
   return (

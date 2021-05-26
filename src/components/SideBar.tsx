@@ -13,7 +13,7 @@ export interface SideBarProps {
 
 export function SideBar({ namePath }: SideBarProps) {
   function handleGoToHome() {
-    Router.push("/profile");
+    Router.push("/home");
   }
   function handleGoToLeaderBoard() {
     Router.push("/leaderboard");
@@ -26,7 +26,7 @@ export function SideBar({ namePath }: SideBarProps) {
         <div>
           <ButtonHome
             onClick={handleGoToHome}
-            className={namePath === "profile" ? "active" : ""}
+            className={namePath === "home" ? "active" : ""}
           >
             <ButtonIconHome />
           </ButtonHome>

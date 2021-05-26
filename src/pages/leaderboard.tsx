@@ -1,5 +1,4 @@
 import Head from "next/head";
-import React from "react";
 import { SideBar } from "../components/SideBar";
 import {
   ProfileContainer,

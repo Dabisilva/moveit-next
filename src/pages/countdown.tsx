@@ -8,7 +8,7 @@ import { Profile } from "../components/Profile";
 import { SideBar } from "../components/SideBar";
 import { ChallengesProvider } from "../contexts/ChallengeContext";
 import { CountdownProvider } from "../contexts/CountDownContext";
-import { Container, ProfileContainer } from "../styles/pages/Profile.module";
+import { Container, ProfileContainer } from "../styles/pages/Countdown.module";
 
 interface HomeProps {
   level: number;
@@ -16,14 +16,14 @@ interface HomeProps {
   challengesCompleted: number;
 }
 
-export default function profile(props: HomeProps) {
+export default function countdown(props: HomeProps) {
   return (
     <>
       <Head>
         <title>Início | move.it</title>
       </Head>
       <ProfileContainer>
-        <SideBar namePath="profile" />
+        <SideBar namePath="home" />
 
         <ChallengesProvider
           level={props.level}

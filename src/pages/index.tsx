@@ -7,7 +7,7 @@ export default function Login() {
     <>
       <Container>
         <Head>
-          <title>Home | move.it</title>
+          <title>Login | move.it</title>
         </Head>
 
         <ImageDiv>
