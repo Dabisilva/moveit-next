@@ -72,7 +72,7 @@ export const InputContent = styled.input`
 
 export const CreateAccountButton = styled.button`
   margin-top: 3rem;
-  background: var(--blue_twitter);
+  background: var(--blue_light);
 
   color: var(--white);
   font-size: 1.5rem;
