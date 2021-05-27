@@ -9,14 +9,9 @@ import { SideBar } from "../components/SideBar";
 import { ChallengesProvider } from "../contexts/ChallengeContext";
 import { CountdownProvider } from "../contexts/CountDownContext";
 import { Container, ProfileContainer } from "../styles/pages/Countdown.module";
+import { ChallengerProps } from "../Types/ChallengerProps";
 
-interface HomeProps {
-  level: number;
-  currentExperience: number;
-  challengesCompleted: number;
-}
-
-export default function countdown(props: HomeProps) {
+export default function countdown(props: ChallengerProps) {
   return (
     <>
       <Head>

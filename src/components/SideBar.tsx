@@ -1,15 +1,21 @@
 import Link from "next/link";
+import Router from "next/router";
 import {
   Container,
   IconHome,
   IconLeaderBoard,
+  ButtonSignOut,
 } from "../styles/components/SideBar.module";
-
+import { GoSignOut } from "react-icons/go";
 export interface SideBarProps {
   namePath?: string;
 }
 
 export function SideBar({ namePath }: SideBarProps) {
+  function handleSignOut() {
+    Router.push("/");
+  }
+
   return (
     <>
       <Container>
@@ -28,7 +34,9 @@ export function SideBar({ namePath }: SideBarProps) {
           </Link>
         </div>
 
-        <div />
+        <ButtonSignOut onClick={handleSignOut}>
+          <GoSignOut />
+        </ButtonSignOut>
       </Container>
     </>
   );

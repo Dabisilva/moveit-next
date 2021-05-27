@@ -67,3 +67,14 @@ export const IconLeaderBoard = styled(FiAward)`
   height: 2rem;
   stroke: var(--text);
 `;
+
+export const ButtonSignOut = styled.button`
+  background: none;
+  margin: 2rem;
+
+  svg {
+    fill: var(--red);
+    width: 2rem;
+    height: 2rem;
+  }
+`;

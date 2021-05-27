@@ -19,10 +19,11 @@ export const Content = styled.div`
   padding: 2.5rem 2rem;
   max-width: 60rem;
   display: flex;
-  align-items: center;
+
   flex-direction: column;
 
   h1 {
+    margin-top: 4rem;
     color: var(--title);
     font-weight: 600;
   }
