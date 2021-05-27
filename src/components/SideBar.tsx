@@ -1,41 +1,31 @@
+import Link from "next/link";
 import {
   Container,
-  ButtonHome,
-  ButtonIconHome,
-  ButtonLeaderBoard,
-  ButtonIconLeaderBoard,
+  IconHome,
+  IconLeaderBoard,
 } from "../styles/components/SideBar.module";
-import Router from "next/router";
 
 export interface SideBarProps {
   namePath?: string;
 }
 
 export function SideBar({ namePath }: SideBarProps) {
-  function handleGoToHome() {
-    Router.push("/home");
-  }
-  function handleGoToLeaderBoard() {
-    Router.push("/leaderboard");
-  }
   return (
     <>
       <Container>
         <img src="/icons/SideBarLogo.svg" alt="logo" />
 
         <div>
-          <ButtonHome
-            onClick={handleGoToHome}
-            className={namePath === "home" ? "active" : ""}
-          >
-            <ButtonIconHome />
-          </ButtonHome>
-          <ButtonLeaderBoard
-            onClick={handleGoToLeaderBoard}
-            className={namePath === "leaderboard" ? "active" : ""}
-          >
-            <ButtonIconLeaderBoard />
-          </ButtonLeaderBoard>
+          <Link href="/home">
+            <a className={namePath === "home" ? "active" : ""}>
+              <IconHome />
+            </a>
+          </Link>
+          <Link href="/leaderboard">
+            <a className={namePath === "leaderboard" ? "active" : ""}>
+              <IconLeaderBoard />
+            </a>
+          </Link>
         </div>
 
         <div />

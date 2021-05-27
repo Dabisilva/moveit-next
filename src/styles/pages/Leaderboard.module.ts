@@ -3,9 +3,13 @@ import styled from "styled-components";
 export const ProfileContainer = styled.div`
   display: grid;
 
-  grid-template-rows: 7rem auto;
   grid-template-columns: 7rem auto;
   grid-template-areas: "SB BC";
+
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const Container = styled.div`
@@ -92,12 +96,10 @@ export const Container = styled.div`
   @media (max-width: 990px) {
     margin: 0 6rem;
     padding: 2rem 1rem;
-    max-width: 25rem;
   }
   @media (max-width: 500px) {
-    margin: 0 3rem;
+    margin: 1rem;
     padding: 1rem 1rem;
-    max-width: 10rem;
   }
 `;
 

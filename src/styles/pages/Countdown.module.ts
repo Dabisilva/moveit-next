@@ -6,6 +6,11 @@ export const ProfileContainer = styled.div`
   grid-template-rows: 7rem auto;
   grid-template-columns: 7rem auto;
   grid-template-areas: "SB BC";
+
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const Container = styled.div`

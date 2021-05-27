@@ -15,6 +15,10 @@ export default function CountDown() {
     Router.push("/countdown");
   }
 
+  function handleSubmitTyping() {
+    Router.push("/typing");
+  }
+
   return (
     <>
       <Head>
@@ -54,7 +58,7 @@ export default function CountDown() {
 
               <p>Lembre-se do número mais longo que puder.</p>
             </CardButton>
-            <CardButton onClick={() => {}}>
+            <CardButton onClick={handleSubmitTyping}>
               <FaKeyboard />
               <span>Digitando</span>
 

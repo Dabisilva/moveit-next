@@ -3,8 +3,13 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: grid;
 
-  grid-template-rows: 7rem auto;
+  grid-template-columns: 7rem auto;
   grid-template-areas: "SB BC";
+
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const Content = styled.div`
@@ -22,13 +27,21 @@ export const CardContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media (max-width: 1630px) {
+  @media (max-width: 1670px) {
+    padding: 1.5rem 1rem;
+    max-width: none;
+    margin: 0 20rem;
+  }
+  @media (max-width: 1660px) {
     padding: 1.5rem 1rem;
     max-width: none;
     margin: 0 15rem;
   }
   @media (max-width: 1480px) {
     margin: 0 10rem;
+  }
+  @media (max-width: 500px) {
+    margin: 0 5rem;
   }
 `;
 

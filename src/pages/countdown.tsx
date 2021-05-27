@@ -20,7 +20,7 @@ export default function countdown(props: HomeProps) {
   return (
     <>
       <Head>
-        <title>Início | move.it</title>
+        <title>Contador | move.it</title>
       </Head>
       <ProfileContainer>
         <SideBar namePath="home" />

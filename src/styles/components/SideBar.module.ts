@@ -7,7 +7,7 @@ export const Container = styled.aside`
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  max-width: 7rem;
+  width: 7rem;
   height: 100vh;
   padding-top: 1rem;
   background: var(--primary);
@@ -23,64 +23,46 @@ export const Container = styled.aside`
   }
 
   @media (max-width: 500px) {
-    display: none;
-  }
-`;
-
-export const ButtonHome = styled.button`
-  width: 100px;
-  height: 2rem;
-  border-left-color: 1px solidvar(--blue);
-  background: none;
-  transition: 0.2s;
-  &.active,
-  &:hover {
-    svg {
-      stroke: var(--blue);
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    height: 7rem;
+    img {
+      display: none;
+    }
+    div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      height: 7rem;
     }
   }
 
-  &.active {
-    &:before {
-      height: 56px;
-      border-radius: 8px;
-      background-color: var(--blue);
-      left: -7px;
-      position: absolute;
-      content: "";
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 5rem;
+    background: none;
+    transition: 0.2s;
+
+    &.active,
+    &:hover {
+      svg {
+        stroke: var(--blue);
+      }
     }
   }
 `;
-export const ButtonIconHome = styled(FiHome)`
+
+export const IconHome = styled(FiHome)`
   width: 2rem;
   height: 2rem;
   stroke: var(--text);
 `;
 
-export const ButtonLeaderBoard = styled.button`
-  width: 100px;
-  height: 2rem;
-  background: none;
-  transition: 0.2s;
-  &.active,
-  &:hover {
-    svg {
-      stroke: var(--blue);
-    }
-  }
-
-  &.active {
-    &:before {
-      height: 56px;
-      border-radius: 8px;
-      background-color: var(--blue);
-      left: -17px;
-      position: absolute;
-      content: "";
-    }
-  }
-`;
-export const ButtonIconLeaderBoard = styled(FiAward)`
+export const IconLeaderBoard = styled(FiAward)`
   width: 2rem;
   height: 2rem;
   stroke: var(--text);
