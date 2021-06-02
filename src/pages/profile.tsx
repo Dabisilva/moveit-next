@@ -1,19 +1,15 @@
 import { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import { ChallengeBox } from "../components/ChallangeBox";
-import { CountDown } from "../components/CountDown";
+import { CompleteChallenges } from "../components/CompleteChallenges";
 import { ExperienceBar } from "../components/ExperienceBar";
+import { Profile } from "../components/Profile";
 import { SideBar } from "../components/SideBar";
 import { useContextChallengerData } from "../contexts/ChallengeContext";
-import { CountdownProvider } from "../contexts/CountDownContext";
-import {
-  Container,
-  CountdownContainer,
-} from "../styles/pages/Countdown.module";
+import { Container, ProfileContainer } from "../styles/pages/Profile.module";
 import { ChallengerProps } from "../Types/ChallengerProps";
 
-export default function countdown(props: ChallengerProps) {
+export default function profile(props: ChallengerProps) {
   const { getPropsFromChallenger } = useContextChallengerData();
   useEffect(() => {
     getPropsFromChallenger(props);
@@ -21,22 +17,20 @@ export default function countdown(props: ChallengerProps) {
   return (
     <>
       <Head>
-        <title>Contador | move.it</title>
+        <title>Perfil | move.it</title>
       </Head>
-      <CountdownContainer>
-        <SideBar namePath="home" />
+      <ProfileContainer>
+        <SideBar namePath="profile" />
 
         <Container>
           <ExperienceBar />
-          <CountdownProvider>
-            <section>
-              <CountDown />
+          <section>
+            <Profile />
 
-              <ChallengeBox />
-            </section>
-          </CountdownProvider>
+            <CompleteChallenges />
+          </section>
         </Container>
-      </CountdownContainer>
+      </ProfileContainer>
     </>
   );
 }
