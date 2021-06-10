@@ -11,20 +11,11 @@ import {
 } from "../styles/pages/Typing.module";
 import useTypingGame from "react-typing-game-hook";
 import { ExperienceBar } from "../components/ExperienceBar";
-import { GetServerSideProps } from "next";
-import {
-  ChallengesProvider,
-  useContextChallengerData,
-} from "../contexts/ChallengeContext";
-import { ChallengerProps } from "../Types/ChallengerProps";
+import { useContextChallengerData } from "../contexts/ChallengeContext";
 
-export default function Typing(props: ChallengerProps) {
-  const {
-    startNormalChallenge,
-    completChallengeNormal,
-    resetChallenge,
-    getPropsFromChallenger,
-  } = useContextChallengerData();
+export default function Typing() {
+  const { startNormalChallenge, completChallengeNormal, resetChallenge } =
+    useContextChallengerData();
   const [duration, setDuration] = useState(0);
   const [words, setWords] = useState("Teste de digitação com xp.");
 
@@ -41,10 +32,6 @@ export default function Typing(props: ChallengerProps) {
     actions: { insertTyping, resetTyping, deleteTyping, getDuration },
   } = useTypingGame(words);
   const [currWordPos, setCurrWordPos] = useState([-1, -1]);
-
-  useEffect(() => {
-    getPropsFromChallenger(props);
-  }, []);
 
   useEffect(() => {
     if (phase === 2 && endTime && startTime) {
@@ -128,15 +115,3 @@ export default function Typing(props: ChallengerProps) {
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
-
-  return {
-    props: {
-      level: Number(level),
-      currentExperience: Number(currentExperience),
-      challengesCompleted: Number(challengesCompleted),
-    },
-  };
-};

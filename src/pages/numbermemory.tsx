@@ -12,14 +12,11 @@ import {
   AnswerContent,
 } from "../styles/pages/NumberMemory.module";
 import { ExperienceBar } from "../components/ExperienceBar";
-import { GetServerSideProps } from "next";
-import { useContextChallengerData } from "../contexts/ChallengeContext";
 import { ChallengerProps } from "../Types/ChallengerProps";
 
 let countdownTimeout: NodeJS.Timeout;
 
 export default function numbermemory(props: ChallengerProps) {
-  const { getPropsFromChallenger } = useContextChallengerData();
   const [number, setNumber] = useState("");
   const [inputNumber, setInputNumber] = useState("");
   const [start, setStart] = useState(false);
@@ -29,10 +26,6 @@ export default function numbermemory(props: ChallengerProps) {
   const [isActive, setisActive] = useState(false);
   const [next, setNext] = useState(false);
   const [answer, setAnswer] = useState(false);
-
-  useEffect(() => {
-    getPropsFromChallenger(props);
-  }, []);
 
   function genereteRandom(min: number, max: number) {
     const random = Math.floor(Math.random() * (max - min));
@@ -158,15 +151,3 @@ export default function numbermemory(props: ChallengerProps) {
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
-
-  return {
-    props: {
-      level: Number(level),
-      currentExperience: Number(currentExperience),
-      challengesCompleted: Number(challengesCompleted),
-    },
-  };
-};

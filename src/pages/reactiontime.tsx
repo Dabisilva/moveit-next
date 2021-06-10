@@ -12,15 +12,11 @@ import {
   ReactionFinished,
 } from "../styles/pages/ReactionTime.module";
 import { ExperienceBar } from "../components/ExperienceBar";
-import { GetServerSideProps } from "next";
-import { useContextChallengerData } from "../contexts/ChallengeContext";
-import { ChallengerProps } from "../Types/ChallengerProps";
 import { BsClockFill } from "react-icons/bs";
 
 let countdownTimeout: NodeJS.Timeout;
 
-export default function ReactionTime(props: ChallengerProps) {
-  const { getPropsFromChallenger } = useContextChallengerData();
+export default function ReactionTime() {
   const [start, setStart] = useState(false);
   const [click, setClick] = useState(false);
 
@@ -64,9 +60,6 @@ export default function ReactionTime(props: ChallengerProps) {
     handleReactionTime();
   }
 
-  useEffect(() => {
-    getPropsFromChallenger(props);
-  }, []);
   return (
     <>
       <Head>
@@ -114,15 +107,3 @@ export default function ReactionTime(props: ChallengerProps) {
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
-
-  return {
-    props: {
-      level: Number(level),
-      currentExperience: Number(currentExperience),
-      challengesCompleted: Number(challengesCompleted),
-    },
-  };
-};

@@ -9,15 +9,16 @@ import {
   ArrowLogo,
   CreateAccountButton,
 } from "../styles/components/LoginForm.module";
-import Router from "next/router";
+import { useAuth } from "../contexts/AuthContext";
 
 export function LoginForm() {
+  const { signIn } = useAuth();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    Router.push("/home");
+    signIn(name, password);
   }
   return (
     <LoginContainer>
@@ -43,16 +44,14 @@ export function LoginForm() {
             type="password"
           />
 
-          {password.length === 0 ? (
+          {password.length < 8 ? (
             <ButtonDisable disabled>
               <ArrowLogo />
             </ButtonDisable>
           ) : (
-            // <Link href="/home">
             <ButtonEneble type="submit">
               <ArrowLogo />
             </ButtonEneble>
-            // </Link>
           )}
         </LabelContent>
       </form>

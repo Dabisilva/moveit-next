@@ -21,7 +21,6 @@ interface Challenge {
 }
 
 interface ChallengesContextData {
-  getPropsFromChallenger: (props: ChallengerProps) => void;
   level: number;
   levelUp: () => void;
   currentExperience: number;
@@ -40,20 +39,18 @@ interface ChallengesContextData {
 export const ChallengesContext = createContext({} as ChallengesContextData);
 
 export function ChallengesProvider({ children }: ChallengesProviderProps) {
-  const [level, setLevel] = useState<number>();
-  const [currentExperience, setCurrentExperience] = useState<number>();
-  const [challengesCompleted, setChallengesCompleted] = useState<number>();
+  const [level, setLevel] = useState<number>(Number(Cookies.get("level")));
+  const [currentExperience, setCurrentExperience] = useState<number>(
+    Number(Cookies.get("currentExperience"))
+  );
+  const [challengesCompleted, setChallengesCompleted] = useState<number>(
+    Number(Cookies.get("challengesCompleted"))
+  );
   const [activeChallenge, setActiveChallenge] = useState(null);
 
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
-
-  function getPropsFromChallenger(props: ChallengerProps) {
-    setLevel(props.level);
-    setCurrentExperience(props.currentExperience);
-    setChallengesCompleted(props.challengesCompleted);
-  }
 
   useEffect(() => {
     Notification.requestPermission();
@@ -140,7 +137,6 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   return (
     <ChallengesContext.Provider
       value={{
-        getPropsFromChallenger,
         level,
         levelUp,
         currentExperience,
