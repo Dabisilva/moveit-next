@@ -1,11 +1,9 @@
-import { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { ChallengeBox } from "../components/ChallangeBox";
 import { CountDown } from "../components/CountDown";
 import { ExperienceBar } from "../components/ExperienceBar";
 import { SideBar } from "../components/SideBar";
-import { useContextChallengerData } from "../contexts/ChallengeContext";
 import { CountdownProvider } from "../contexts/CountDownContext";
 import {
   Container,
@@ -35,3 +33,19 @@ export default function countdown() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { "moveit:username": username } = ctx.req.cookies;
+
+  if (!username) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};

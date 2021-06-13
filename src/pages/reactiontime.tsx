@@ -13,6 +13,7 @@ import {
 } from "../styles/pages/ReactionTime.module";
 import { ExperienceBar } from "../components/ExperienceBar";
 import { BsClockFill } from "react-icons/bs";
+import { GetServerSideProps } from "next";
 
 let countdownTimeout: NodeJS.Timeout;
 
@@ -107,3 +108,19 @@ export default function ReactionTime() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { "moveit:username": username } = ctx.req.cookies;
+
+  if (!username) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};

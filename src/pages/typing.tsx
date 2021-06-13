@@ -12,6 +12,7 @@ import {
 import useTypingGame from "react-typing-game-hook";
 import { ExperienceBar } from "../components/ExperienceBar";
 import { useContextChallengerData } from "../contexts/ChallengeContext";
+import { GetServerSideProps } from "next";
 
 export default function Typing() {
   const { startNormalChallenge, completChallengeNormal, resetChallenge } =
@@ -115,3 +116,19 @@ export default function Typing() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { "moveit:username": username } = ctx.req.cookies;
+
+  if (!username) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};

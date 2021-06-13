@@ -13,6 +13,7 @@ import {
 } from "../styles/pages/NumberMemory.module";
 import { ExperienceBar } from "../components/ExperienceBar";
 import { ChallengerProps } from "../Types/ChallengerProps";
+import { GetServerSideProps } from "next";
 
 let countdownTimeout: NodeJS.Timeout;
 
@@ -151,3 +152,19 @@ export default function numbermemory(props: ChallengerProps) {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { "moveit:username": username } = ctx.req.cookies;
+
+  if (!username) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};

@@ -5,7 +5,7 @@ import {
   useContext,
   useEffect,
 } from "react";
-import Cookies from "js-cookie";
+import { setCookie, parseCookies, destroyCookie } from "nookies";
 import { api } from "../services/api";
 import Router from "next/router";
 import { toast } from "react-toastify";
@@ -30,8 +30,24 @@ interface AuthContextData {
 
 export const AuthContext = createContext({} as AuthContextData);
 
+let authChannel: BroadcastChannel;
+
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [nome, setName] = useState<string | null>(Cookies.get("username"));
+  const [nome, setName] = useState<string | null>();
+
+  useEffect(() => {
+    authChannel = new BroadcastChannel("auth");
+
+    authChannel.onmessage = (message) => {
+      switch (message.data) {
+        case "signOut":
+          signOut();
+          break;
+        default:
+          break;
+      }
+    };
+  }, []);
 
   async function signIn(nome: string, senha: string) {
     await api
@@ -41,10 +57,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
       .then((response) => {
         setName(response.data);
-        Cookies.set("username", response.data.nome, { expires: 7 });
-        Cookies.set("level", String(response.data.level));
-        Cookies.set("challengesCompleted", String(response.data.challenges));
-        Cookies.set("currentExperience", String(response.data.xp));
+        setCookie(undefined, "moveit:username", response.data.nome, {
+          maxAge: 60 * 60 * 24 * 30, //30 dias
+          path: "/",
+        });
+        setCookie(undefined, "moveit:level", String(response.data.level), {
+          maxAge: 60 * 60 * 24 * 30, //30 dias
+          path: "/",
+        });
+        setCookie(
+          undefined,
+          "moveit:currentExperience",
+          String(response.data.xp),
+          {
+            maxAge: 60 * 60 * 24 * 30, //30 dias
+            path: "/",
+          }
+        );
+        setCookie(
+          undefined,
+          "moveit:challengesCompleted",
+          String(response.data.challenges),
+          {
+            maxAge: 60 * 60 * 24 * 30, //30 dias
+            path: "/",
+          }
+        );
+        Router.push("/home");
       })
       .catch((err) => {
         toast.error("Erro ao tentar logar");
@@ -53,29 +92,45 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   function signOut() {
-    Cookies.remove("username");
-    Cookies.remove("level");
-    Cookies.remove("currentExperience");
-    Cookies.remove("challengesCompleted");
+    destroyCookie(undefined, "moveit:username");
+    destroyCookie(undefined, "moveit:level");
+    destroyCookie(undefined, "moveit:currentExperience");
+    destroyCookie(undefined, "moveit:challengesCompleted");
     setName(null);
+
+    authChannel.postMessage("signOut");
+
+    Router.push("/");
   }
 
   function getUserFromResponse(user: User) {
     setName(user.nome);
-    Cookies.set("username", user.nome);
-    Cookies.set("level", String(user.level));
-    Cookies.set("currentExperience", String(user.xp));
-    Cookies.set("challengesCompleted", String(user.challenges));
+    setCookie(undefined, "moveit:username", user.nome, {
+      maxAge: 60 * 60 * 24 * 30, //30 dias
+      path: "/",
+    });
+    setCookie(undefined, "moveit:level", String(user.level), {
+      maxAge: 60 * 60 * 24 * 30, //30 dias
+      path: "/",
+    });
+    setCookie(undefined, "moveit:currentExperience", String(user.xp), {
+      maxAge: 60 * 60 * 24 * 30, //30 dias
+      path: "/",
+    });
+    setCookie(
+      undefined,
+      "moveit:challengesCompleted",
+      String(user.challenges),
+      {
+        maxAge: 60 * 60 * 24 * 30, //30 dias
+        path: "/",
+      }
+    );
   }
 
   useEffect(() => {
-    const username = Cookies.get("username");
+    const { "moveit:username": username } = parseCookies();
     setName(username);
-    if (nome || username) {
-      Router.push("/home");
-    } else {
-      Router.push("/");
-    }
   }, [nome]);
 
   return (

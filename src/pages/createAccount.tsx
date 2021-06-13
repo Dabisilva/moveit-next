@@ -8,6 +8,7 @@ import { api } from "../services/api";
 import { useAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { FiEyeOff, FiEye } from "react-icons/fi";
+
 export default function createAccount() {
   const { getUserFromResponse } = useAuth();
 

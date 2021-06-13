@@ -6,9 +6,8 @@ import {
   useEffect,
 } from "react";
 import challenges from "../../challenges.json";
-import Cookies from "js-cookie";
 import { LevelUpModal } from "../components/LevelUpModal";
-import { ChallengerProps } from "../Types/ChallengerProps";
+import { parseCookies, setCookie } from "nookies";
 
 interface ChallengesProviderProps {
   children: ReactNode;
@@ -39,12 +38,18 @@ interface ChallengesContextData {
 export const ChallengesContext = createContext({} as ChallengesContextData);
 
 export function ChallengesProvider({ children }: ChallengesProviderProps) {
-  const [level, setLevel] = useState<number>(Number(Cookies.get("level")));
+  const {
+    "moveit:level": cookieLevel,
+    "moveit:currentExperience": cookieCurrentExperience,
+    "moveit:challengesCompleted": cookieChallengeCompleted,
+  } = parseCookies();
+
+  const [level, setLevel] = useState<number>(Number(cookieLevel));
   const [currentExperience, setCurrentExperience] = useState<number>(
-    Number(Cookies.get("currentExperience"))
+    Number(cookieCurrentExperience)
   );
   const [challengesCompleted, setChallengesCompleted] = useState<number>(
-    Number(Cookies.get("challengesCompleted"))
+    Number(cookieChallengeCompleted)
   );
   const [activeChallenge, setActiveChallenge] = useState(null);
 
@@ -57,9 +62,13 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   }, []);
 
   useEffect(() => {
-    Cookies.set("level", String(level));
-    Cookies.set("currentExperience", String(currentExperience));
-    Cookies.set("challengesCompleted", String(challengesCompleted));
+    setCookie(undefined, "moveit:level", String(level));
+    setCookie(undefined, "moveit:currentExperience", String(currentExperience));
+    setCookie(
+      undefined,
+      "moveit:challengesCompleted",
+      String(challengesCompleted)
+    );
   }, [level, currentExperience, challengesCompleted]);
 
   function levelUp() {
