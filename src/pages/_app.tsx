@@ -6,6 +6,7 @@ import { ThemeName, themes } from "../styles/themes";
 import GlobalStylesModule from "../styles/GlobalStyles.module";
 import { ToastContainer, Slide } from "react-toastify";
 import { AuthProvider } from "../contexts/AuthContext";
+import { Provider as NextAuthProvider } from "next-auth/client";
 import "react-toastify/dist/ReactToastify.min.css";
 
 function MyApp({ Component, pageProps }) {
@@ -17,20 +18,22 @@ function MyApp({ Component, pageProps }) {
         <GlobalStylesModule />
         {/* <HeaderTheme themeName={themeName} setThemeName={setThemeName} /> */}
         <AuthProvider>
-          <ChallengesProvider>
-            <Component {...pageProps} />
-            <ToastContainer
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              transition={Slide}
-            />
-          </ChallengesProvider>
+          <NextAuthProvider session={pageProps.session}>
+            <ChallengesProvider>
+              <Component {...pageProps} />
+              <ToastContainer
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                transition={Slide}
+              />
+            </ChallengesProvider>
+          </NextAuthProvider>
         </AuthProvider>
       </ThemeProvider>
     </>

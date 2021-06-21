@@ -8,6 +8,8 @@ import {
 import challenges from "../../challenges.json";
 import { LevelUpModal } from "../components/LevelUpModal";
 import { parseCookies, setCookie } from "nookies";
+import { api } from "../services/api";
+import { useAuth } from "./AuthContext";
 
 interface ChallengesProviderProps {
   children: ReactNode;
@@ -18,6 +20,17 @@ interface Challenge {
   description: string;
   amount: number;
 }
+type ChallengeResponseProps = {
+  level: number;
+  challengesCompleted: number;
+  currentExperience: number;
+};
+
+type ChallengeCompletUpdadate = {
+  levelUp: number;
+  challenges: number;
+  xp: number;
+};
 
 interface ChallengesContextData {
   level: number;
@@ -28,16 +41,21 @@ interface ChallengesContextData {
   startNormalChallenge: () => void;
   resetChallenge: () => void;
   completChallenge: () => void;
-  completChallengeNormal: () => void;
+  completChallengeTyping: (number: number) => void;
   closeLevelUpModal: () => void;
   activeChallenge: Challenge;
   experienceToNextLevel: number;
   isLevelUpModalOpen: boolean;
+  getDatesFromResponse: (date: ChallengeResponseProps) => void;
+  completChallengeNumber: (number: number) => void;
+  completChallengeReactionTime: (number: number) => void;
 }
 
 export const ChallengesContext = createContext({} as ChallengesContextData);
 
 export function ChallengesProvider({ children }: ChallengesProviderProps) {
+  const { email } = useAuth();
+
   const {
     "moveit:level": cookieLevel,
     "moveit:currentExperience": cookieCurrentExperience,
@@ -62,13 +80,19 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   }, []);
 
   useEffect(() => {
-    setCookie(undefined, "moveit:level", String(level));
-    setCookie(undefined, "moveit:currentExperience", String(currentExperience));
-    setCookie(
-      undefined,
-      "moveit:challengesCompleted",
-      String(challengesCompleted)
-    );
+    if (level != NaN) {
+      setCookie(undefined, "moveit:level", String(level));
+      setCookie(
+        undefined,
+        "moveit:currentExperience",
+        String(currentExperience)
+      );
+      setCookie(
+        undefined,
+        "moveit:challengesCompleted",
+        String(challengesCompleted)
+      );
+    }
   }, [level, currentExperience, challengesCompleted]);
 
   function levelUp() {
@@ -108,6 +132,12 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     const { amount } = activeChallenge;
     let finalExperience = currentExperience + amount;
 
+    let form = {
+      xp: finalExperience,
+      challenges: challengesCompleted + 1,
+      levelUp: level + 1,
+    };
+    updateDatesChallenger(form);
     if (finalExperience >= experienceToNextLevel) {
       finalExperience = finalExperience - experienceToNextLevel;
       levelUp();
@@ -126,7 +156,7 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     }
   }
 
-  function completChallengeNormal() {
+  function completChallengeTyping(number: number) {
     if (!activeChallenge) {
       return;
     }
@@ -141,8 +171,82 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     setCurrentExperience(finalExperience);
     setChallengesCompleted(challengesCompleted + 1);
     setActiveChallenge(null);
+    let form = {
+      xp: finalExperience,
+      challenges: challengesCompleted + 1,
+      levelUp: level + 1,
+    };
+    updateDatesChallenger(form);
   }
 
+  function completChallengeNumber(number: number) {
+    if (!activeChallenge) {
+      return;
+    }
+
+    let finalExperience = currentExperience + number;
+
+    if (finalExperience >= experienceToNextLevel) {
+      finalExperience = finalExperience - experienceToNextLevel;
+      levelUp();
+    }
+
+    setCurrentExperience(finalExperience);
+    setChallengesCompleted(challengesCompleted + 1);
+    setActiveChallenge(null);
+    let form = {
+      xp: finalExperience,
+      challenges: challengesCompleted + 1,
+      levelUp: level + 1,
+    };
+    updateDatesChallenger(form);
+  }
+
+  function completChallengeReactionTime(number: number) {
+    if (!activeChallenge) {
+      return;
+    }
+
+    let finalExperience = currentExperience + number;
+
+    if (finalExperience >= experienceToNextLevel) {
+      finalExperience = finalExperience - experienceToNextLevel;
+      levelUp();
+    }
+
+    setCurrentExperience(finalExperience);
+    setChallengesCompleted(challengesCompleted + 1);
+    setActiveChallenge(null);
+    let form = {
+      xp: finalExperience,
+      challenges: challengesCompleted + 1,
+      levelUp: level + 1,
+    };
+    updateDatesChallenger(form);
+  }
+
+  function getDatesFromResponse(date: ChallengeResponseProps) {
+    setLevel(date.level);
+    setCurrentExperience(date.currentExperience);
+    setChallengesCompleted(date.challengesCompleted);
+  }
+
+  async function updateDatesChallenger({
+    xp,
+    challenges,
+    levelUp,
+  }: ChallengeCompletUpdadate) {
+    await api
+      .put("updateLevelStats", {
+        email,
+        xp,
+        challenges,
+        level: levelUp,
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+  }
   return (
     <ChallengesContext.Provider
       value={{
@@ -156,9 +260,12 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
         resetChallenge,
         experienceToNextLevel,
         completChallenge,
-        completChallengeNormal,
+        completChallengeTyping,
         isLevelUpModalOpen,
         closeLevelUpModal,
+        getDatesFromResponse,
+        completChallengeNumber,
+        completChallengeReactionTime,
       }}
     >
       {children}

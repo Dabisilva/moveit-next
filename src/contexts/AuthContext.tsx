@@ -8,10 +8,13 @@ import {
 import { setCookie, parseCookies, destroyCookie } from "nookies";
 import { api } from "../services/api";
 import Router from "next/router";
+import { signOut as NextSignOut } from "next-auth/client";
 import { toast } from "react-toastify";
 
 type User = {
+  id: number;
   nome: string;
+  email: string;
   level: number;
   challenges: number;
   xp: number;
@@ -23,8 +26,9 @@ interface AuthProviderProps {
 
 interface AuthContextData {
   nome: string;
+  email: string;
   getUserFromResponse: (user: User) => void;
-  signIn: (name: string, senha: string) => void;
+  signIn: (email: string, senha: string) => void;
   signOut: () => void;
 }
 
@@ -34,6 +38,7 @@ let authChannel: BroadcastChannel;
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [nome, setName] = useState<string | null>();
+  const [email, setEmail] = useState<string | null>();
 
   useEffect(() => {
     authChannel = new BroadcastChannel("auth");
@@ -49,20 +54,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
     };
   }, []);
 
-  async function signIn(nome: string, senha: string) {
+  async function signIn(email: string, senha: string) {
     await api
       .post("login", {
-        nome,
+        type: "normal",
+        email,
         senha,
       })
       .then((response) => {
-        setName(response.data);
-        setCookie(undefined, "moveit:username", response.data.nome, {
-          maxAge: 60 * 60 * 24 * 30, //30 dias
+        setName(response.data.nome);
+        setEmail(response.data.email);
+        setCookie(undefined, "moveit:user", JSON.stringify(response.data), {
+          maxAge: 60 * 60 * 24 * 7, //7 dias
           path: "/",
         });
         setCookie(undefined, "moveit:level", String(response.data.level), {
-          maxAge: 60 * 60 * 24 * 30, //30 dias
+          maxAge: 60 * 60 * 24 * 7, //7 dias
           path: "/",
         });
         setCookie(
@@ -70,7 +77,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           "moveit:currentExperience",
           String(response.data.xp),
           {
-            maxAge: 60 * 60 * 24 * 30, //30 dias
+            maxAge: 60 * 60 * 24 * 7, //7 dias
             path: "/",
           }
         );
@@ -79,20 +86,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
           "moveit:challengesCompleted",
           String(response.data.challenges),
           {
-            maxAge: 60 * 60 * 24 * 30, //30 dias
+            maxAge: 60 * 60 * 24 * 7, //7 dias
             path: "/",
           }
         );
+        toast.success("Sucesso", {
+          position: "top-center",
+        });
         Router.push("/home");
       })
       .catch((err) => {
-        toast.error("Erro ao tentar logar");
-        console.log(err);
+        let message = err.response.data.message;
+        toast.error(message);
       });
   }
 
   function signOut() {
-    destroyCookie(undefined, "moveit:username");
+    NextSignOut();
+    destroyCookie(undefined, "moveit:user");
     destroyCookie(undefined, "moveit:level");
     destroyCookie(undefined, "moveit:currentExperience");
     destroyCookie(undefined, "moveit:challengesCompleted");
@@ -105,16 +116,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   function getUserFromResponse(user: User) {
     setName(user.nome);
-    setCookie(undefined, "moveit:username", user.nome, {
-      maxAge: 60 * 60 * 24 * 30, //30 dias
+
+    setCookie(undefined, "moveit:user", JSON.stringify(user), {
+      maxAge: 60 * 60 * 24 * 7, //7 dias
       path: "/",
     });
     setCookie(undefined, "moveit:level", String(user.level), {
-      maxAge: 60 * 60 * 24 * 30, //30 dias
+      maxAge: 60 * 60 * 24 * 7, //7 dias
       path: "/",
     });
     setCookie(undefined, "moveit:currentExperience", String(user.xp), {
-      maxAge: 60 * 60 * 24 * 30, //30 dias
+      maxAge: 60 * 60 * 24 * 7, //7 dias
       path: "/",
     });
     setCookie(
@@ -122,21 +134,28 @@ export function AuthProvider({ children }: AuthProviderProps) {
       "moveit:challengesCompleted",
       String(user.challenges),
       {
-        maxAge: 60 * 60 * 24 * 30, //30 dias
+        maxAge: 60 * 60 * 24 * 7, //7 dias
         path: "/",
       }
     );
+
+    Router.push("/home");
   }
 
   useEffect(() => {
-    const { "moveit:username": username } = parseCookies();
-    setName(username);
+    const { "moveit:user": user } = parseCookies();
+    if (user) {
+      const userCookie: User = JSON.parse(user);
+      setEmail(userCookie.email);
+      setName(userCookie.nome);
+    }
   }, [nome]);
 
   return (
     <AuthContext.Provider
       value={{
         nome,
+        email,
         getUserFromResponse,
         signIn,
         signOut,

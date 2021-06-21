@@ -14,10 +14,13 @@ import {
 import { ExperienceBar } from "../components/ExperienceBar";
 import { ChallengerProps } from "../Types/ChallengerProps";
 import { GetServerSideProps } from "next";
+import { useContextChallengerData } from "../contexts/ChallengeContext";
 
 let countdownTimeout: NodeJS.Timeout;
 
 export default function numbermemory(props: ChallengerProps) {
+  const { startNormalChallenge, completChallengeNumber } =
+    useContextChallengerData();
   const [number, setNumber] = useState("");
   const [inputNumber, setInputNumber] = useState("");
   const [start, setStart] = useState(false);
@@ -37,6 +40,7 @@ export default function numbermemory(props: ChallengerProps) {
   }
 
   function Start(levelUp: number) {
+    startNormalChallenge();
     clearTimeout(countdownTimeout);
     setStart(true);
     setTime(currentTime);
@@ -68,6 +72,7 @@ export default function numbermemory(props: ChallengerProps) {
     setAnswer(false);
 
     if (number == inputNumber) {
+      completChallengeNumber(level * 5);
       setCurrentTime(currentTime + 1);
       setLevel(level + 1);
       setInputNumber("");
@@ -154,9 +159,9 @@ export default function numbermemory(props: ChallengerProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { "moveit:username": username } = ctx.req.cookies;
+  const { "moveit:user": user } = ctx.req.cookies;
 
-  if (!username) {
+  if (!user) {
     return {
       redirect: {
         destination: "/",

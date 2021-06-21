@@ -55,15 +55,14 @@ export default function createAccount() {
     await api
       .post("create", form)
       .then((response) => {
-        console.log(response.data);
         toast.success("Usuário criado com sucesso", {
           position: "top-center",
         });
         getUserFromResponse(response.data);
       })
       .catch((err) => {
-        console.log(err);
-        toast.error("Erro na criação de usuário");
+        let message = err.response.data.message;
+        toast.error(message);
       });
   }
 

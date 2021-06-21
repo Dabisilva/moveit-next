@@ -8,17 +8,21 @@ import {
   ButtonEneble,
   ArrowLogo,
   CreateAccountButton,
+  DivLogin,
 } from "../styles/components/LoginForm.module";
+import { signIn as NextSignIn } from "next-auth/client";
 import { useAuth } from "../contexts/AuthContext";
+import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 export function LoginForm() {
   const { signIn } = useAuth();
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    signIn(name, password);
+    signIn(email, password);
   }
   return (
     <LoginContainer>
@@ -30,9 +34,9 @@ export function LoginForm() {
         <LabelContent>
           <InputContent
             autoFocus
-            placeholder="Digite seu username"
-            value={name}
-            onChange={(text) => setName(text.target.value)}
+            placeholder="Digite seu email"
+            value={email}
+            onChange={(text) => setEmail(text.target.value)}
             type="text"
           />
         </LabelContent>
@@ -55,7 +59,16 @@ export function LoginForm() {
           )}
         </LabelContent>
       </form>
-
+      <DivLogin>
+        <div>
+          <button onClick={() => NextSignIn("github")}>
+            <FaGithub />
+          </button>
+          <button>
+            <FcGoogle onClick={() => NextSignIn("google")} />
+          </button>
+        </div>
+      </DivLogin>
       <Link href="/createAccount">
         <CreateAccountButton>Criar conta</CreateAccountButton>
       </Link>

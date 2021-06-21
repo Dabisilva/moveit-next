@@ -14,10 +14,12 @@ import {
 import { ExperienceBar } from "../components/ExperienceBar";
 import { BsClockFill } from "react-icons/bs";
 import { GetServerSideProps } from "next";
+import { useContextChallengerData } from "../contexts/ChallengeContext";
 
 let countdownTimeout: NodeJS.Timeout;
 
 export default function ReactionTime() {
+  const { completChallengeReactionTime } = useContextChallengerData();
   const [start, setStart] = useState(false);
   const [click, setClick] = useState(false);
 
@@ -110,9 +112,9 @@ export default function ReactionTime() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { "moveit:username": username } = ctx.req.cookies;
+  const { "moveit:user": user } = ctx.req.cookies;
 
-  if (!username) {
+  if (!user) {
     return {
       redirect: {
         destination: "/",

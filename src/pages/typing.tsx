@@ -15,7 +15,7 @@ import { useContextChallengerData } from "../contexts/ChallengeContext";
 import { GetServerSideProps } from "next";
 
 export default function Typing() {
-  const { startNormalChallenge, completChallengeNormal, resetChallenge } =
+  const { startNormalChallenge, completChallengeTyping, resetChallenge } =
     useContextChallengerData();
   const [duration, setDuration] = useState(0);
   const [words, setWords] = useState("Teste de digitação com xp.");
@@ -45,7 +45,12 @@ export default function Typing() {
 
   useEffect(() => {
     if (phase === 2 && endTime && startTime) {
-      completChallengeNormal();
+      let porcentXp =
+        80 *
+        (Number(((correctChar / words.length / errorChar) * 100).toFixed(2)) /
+          100);
+
+      completChallengeTyping(Number(porcentXp));
     }
   }, [phase, startTime, endTime]);
 
@@ -118,9 +123,9 @@ export default function Typing() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { "moveit:username": username } = ctx.req.cookies;
+  const { "moveit:user": user } = ctx.req.cookies;
 
-  if (!username) {
+  if (!user) {
     return {
       redirect: {
         destination: "/",

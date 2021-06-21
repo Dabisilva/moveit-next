@@ -8,8 +8,6 @@ export function Profile() {
 
   return (
     <ProfileContainer>
-      <img src="https://github.com/Dabisilva.png" alt="Davi Barbosa" />
-
       <div>
         <strong>{nome}</strong>
         <p>

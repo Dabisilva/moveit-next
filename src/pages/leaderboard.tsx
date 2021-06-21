@@ -39,11 +39,6 @@ export default function Leadboard() {
               <tr>
                 <td>1</td>
                 <TdProfile>
-                  <img
-                    src="https://avatars.githubusercontent.com/u/57877449?v=4"
-                    alt="foto"
-                  />
-
                   <div>
                     <span>Davi Barbosa</span>
                     <UserLevelContainer>
@@ -65,11 +60,6 @@ export default function Leadboard() {
               <tr>
                 <td>1</td>
                 <TdProfile>
-                  <img
-                    src="https://avatars.githubusercontent.com/u/57877449?v=4"
-                    alt="foto"
-                  />
-
                   <div>
                     <span>Davi Barbosa</span>
                     <UserLevelContainer>
@@ -97,9 +87,9 @@ export default function Leadboard() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { "moveit:username": username } = ctx.req.cookies;
+  const { "moveit:user": user } = ctx.req.cookies;
 
-  if (!username) {
+  if (!user) {
     return {
       redirect: {
         destination: "/",
