@@ -25,11 +25,12 @@ interface AuthProviderProps {
 }
 
 interface AuthContextData {
-  nome: string;
-  email: string;
-  getUserFromResponse: (user: User) => void;
+  user: User;
+  update: boolean;
+  getUserFromResponse: (user: User, update: string) => void;
   signIn: (email: string, senha: string) => void;
   signOut: () => void;
+  setupdate: () => void;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -37,9 +38,8 @@ export const AuthContext = createContext({} as AuthContextData);
 let authChannel: BroadcastChannel;
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [nome, setName] = useState<string | null>();
-  const [email, setEmail] = useState<string | null>();
-
+  const [user, setUser] = useState<User | null>();
+  const [update, setUpdate] = useState(false);
   useEffect(() => {
     authChannel = new BroadcastChannel("auth");
 
@@ -62,8 +62,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         senha,
       })
       .then((response) => {
-        setName(response.data.nome);
-        setEmail(response.data.email);
+        setUser(response.data);
+
         setCookie(undefined, "moveit:user", JSON.stringify(response.data), {
           maxAge: 60 * 60 * 24 * 7, //7 dias
           path: "/",
@@ -107,15 +107,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
     destroyCookie(undefined, "moveit:level");
     destroyCookie(undefined, "moveit:currentExperience");
     destroyCookie(undefined, "moveit:challengesCompleted");
-    setName(null);
+    setUser(null);
 
     authChannel.postMessage("signOut");
 
     Router.push("/");
   }
 
-  function getUserFromResponse(user: User) {
-    setName(user.nome);
+  function getUserFromResponse(user: User, update: string) {
+    setUser(user);
 
     setCookie(undefined, "moveit:user", JSON.stringify(user), {
       maxAge: 60 * 60 * 24 * 7, //7 dias
@@ -139,26 +139,34 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     );
 
-    Router.push("/home");
+    if (update) {
+      return;
+    } else {
+      Router.push("/home");
+    }
   }
 
   useEffect(() => {
     const { "moveit:user": user } = parseCookies();
     if (user) {
       const userCookie: User = JSON.parse(user);
-      setEmail(userCookie.email);
-      setName(userCookie.nome);
+      setUser(userCookie);
     }
-  }, [nome]);
+  }, []);
+
+  function setupdate() {
+    setUpdate(!update);
+  }
 
   return (
     <AuthContext.Provider
       value={{
-        nome,
-        email,
+        user,
         getUserFromResponse,
         signIn,
         signOut,
+        update,
+        setupdate,
       }}
     >
       {children}

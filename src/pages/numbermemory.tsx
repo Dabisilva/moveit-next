@@ -72,7 +72,7 @@ export default function numbermemory(props: ChallengerProps) {
     setAnswer(false);
 
     if (number == inputNumber) {
-      completChallengeNumber(level * 5);
+      completChallengeNumber(level * 10);
       setCurrentTime(currentTime + 1);
       setLevel(level + 1);
       setInputNumber("");

@@ -10,6 +10,7 @@ import {
   ReactionTimeContent,
   ReactionClick,
   ReactionFinished,
+  AvarageContent,
 } from "../styles/pages/ReactionTime.module";
 import { ExperienceBar } from "../components/ExperienceBar";
 import { BsClockFill } from "react-icons/bs";
@@ -19,7 +20,11 @@ import { useContextChallengerData } from "../contexts/ChallengeContext";
 let countdownTimeout: NodeJS.Timeout;
 
 export default function ReactionTime() {
-  const { completChallengeReactionTime } = useContextChallengerData();
+  const {
+    completChallengeReactionTime,
+    startNormalChallenge,
+    activeChallenge,
+  } = useContextChallengerData();
   const [start, setStart] = useState(false);
   const [click, setClick] = useState(false);
 
@@ -29,6 +34,12 @@ export default function ReactionTime() {
 
   const [time, setTime] = useState<number>();
   const [startDate, setSartDate] = useState<any>();
+
+  const [countMsTime, setCountMsTime] = useState<number>(0);
+  const [countTypeTime, setCountTypeTime] = useState<number>(1);
+  const [avarageNumber, setAvarageNumber] = useState<number>();
+  const [avarageBoolean, setAvarageBoolean] = useState(false);
+  const [xp, setXp] = useState<number>();
 
   function handleStopCountDown() {
     setisActive(false);
@@ -41,6 +52,8 @@ export default function ReactionTime() {
 
     setTime(miliseconds);
     setHasFinished(true);
+    setCountMsTime(countMsTime + miliseconds);
+    setCountTypeTime(countTypeTime + 1);
   }
 
   function startCountdown() {
@@ -49,12 +62,15 @@ export default function ReactionTime() {
   }
 
   function handleReactionTime() {
+    if (!activeChallenge) {
+      startNormalChallenge();
+    }
     setStart(true);
     setTimeout(() => {
       setStart(false);
       setClick(true);
       startCountdown();
-    }, 5000);
+    }, 1000);
   }
 
   function handleResetAndStart() {
@@ -62,6 +78,40 @@ export default function ReactionTime() {
     setTime(0);
     handleReactionTime();
   }
+
+  function fineshedAndGetXp() {
+    setStart(false);
+    setClick(false);
+    setHasFinished(false);
+    setAvarageBoolean(true);
+    setAvarageNumber(Math.round(countMsTime / 5));
+    const avarage = Math.round(countMsTime / 5);
+
+    if (avarage <= 200) {
+      console.log(avarage, "muito bom");
+      completChallengeReactionTime(200);
+      setXp(200);
+    }
+    if (avarage <= 300 && avarage > 200) {
+      completChallengeReactionTime(100);
+      setXp(100);
+    }
+    if (avarage <= 400 && avarage > 300) {
+      completChallengeReactionTime(50);
+      setXp(50);
+      console.log(avarage, "ok");
+    }
+    if (avarage >= 500) {
+      completChallengeReactionTime(30);
+      setXp(30);
+    }
+  }
+
+  useEffect(() => {
+    if (countTypeTime === 5) {
+      fineshedAndGetXp();
+    }
+  }, [countTypeTime]);
 
   return (
     <>
@@ -76,10 +126,14 @@ export default function ReactionTime() {
           <h1>Teste de tempo de reação</h1>
           <h2>
             Quando a tela vermelha ficar verde clique na tela o mais rápido que
-            puder.
+            puder. 5 tentativas para ganhar os pontos
           </h2>
+
+          <div>
+            <h3>{countTypeTime}</h3>
+          </div>
           <ReactionTimeContainer>
-            {!start && !hasFinished && !click && (
+            {!start && !hasFinished && !click && !avarageBoolean && (
               <ReactionTimeContent onClick={handleReactionTime}>
                 <h2>Clique em qualquer lugar para começar</h2>
               </ReactionTimeContent>
@@ -102,7 +156,17 @@ export default function ReactionTime() {
               <ReactionFinished onClick={handleResetAndStart}>
                 <BsClockFill />
                 <h2>{time}ms</h2>
+
+                <h3>clique pra continuar</h3>
               </ReactionFinished>
+            )}
+
+            {avarageBoolean && (
+              <AvarageContent>
+                <h2>Sua média é de {avarageNumber}ms</h2>
+                <h2>Você ganhou {xp} de experiência.</h2>
+                <button onClick={handleReactionTime}>recomeçar</button>
+              </AvarageContent>
             )}
           </ReactionTimeContainer>
         </Content>

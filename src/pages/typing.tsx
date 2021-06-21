@@ -34,21 +34,26 @@ export default function Typing() {
   } = useTypingGame(words);
   const [currWordPos, setCurrWordPos] = useState([-1, -1]);
 
-  useEffect(() => {
+  function start() {
     if (phase === 2 && endTime && startTime) {
       setDuration(Math.floor((endTime - startTime) / 1000));
       setCurrWordPos([-1, -1]);
     } else {
       setDuration(0);
     }
+  }
+
+  useEffect(() => {
+    start();
   }, [phase, startTime, endTime]);
 
   useEffect(() => {
     if (phase === 2 && endTime && startTime) {
-      let porcentXp =
+      let porcentXp = Math.round(
         80 *
-        (Number(((correctChar / words.length / errorChar) * 100).toFixed(2)) /
-          100);
+          (Number(((correctChar / words.length / errorChar) * 100).toFixed(2)) /
+            100)
+      );
 
       completChallengeTyping(Number(porcentXp));
     }

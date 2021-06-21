@@ -26,7 +26,7 @@ export default function Login() {
           toast.success("Sucesso", {
             position: "top-center",
           });
-          getUserFromResponse(response.data);
+          getUserFromResponse(response.data, null);
           getDatesFromResponse({
             challengesCompleted: response.data.challenges,
             currentExperience: response.data.xp,
