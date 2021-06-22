@@ -64,10 +64,8 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   } = parseCookies();
   const [level, setLevel] = useState<number>(Number(cookieLevel));
 
-  const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
-
   const [currentExperience, setCurrentExperience] = useState<number>(
-    Number(cookieCurrentExperience) - experienceToNextLevel
+    Number(cookieCurrentExperience)
   );
 
   const [challengesCompleted, setChallengesCompleted] = useState<number>(
@@ -76,6 +74,8 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   const [activeChallenge, setActiveChallenge] = useState(null);
 
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
+
+  const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
 
   useEffect(() => {
     Notification.requestPermission();
@@ -137,6 +137,7 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     }
 
     const { amount } = activeChallenge;
+
     let finalExperience = currentExperience + amount;
 
     if (finalExperience >= experienceToNextLevel) {
@@ -144,14 +145,14 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
       levelUp();
 
       let form = {
-        xp: amount,
+        xp: finalExperience,
         challenges: challengesCompleted + 1,
         levelUp: level + 1,
       };
       updateDatesChallenger(form);
     } else {
       let form = {
-        xp: amount,
+        xp: finalExperience,
         challenges: challengesCompleted + 1,
         levelUp: level,
       };
@@ -183,14 +184,14 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
       levelUp();
 
       let form = {
-        xp: number,
+        xp: finalExperience,
         challenges: challengesCompleted + 1,
         levelUp: level + 1,
       };
       updateDatesChallenger(form);
     } else {
       let form = {
-        xp: number,
+        xp: finalExperience,
         challenges: challengesCompleted + 1,
         levelUp: level,
       };
@@ -214,14 +215,14 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
       levelUp();
 
       let form = {
-        xp: number,
+        xp: finalExperience,
         challenges: challengesCompleted + 1,
         levelUp: level + 1,
       };
       updateDatesChallenger(form);
     } else {
       let form = {
-        xp: number,
+        xp: finalExperience,
         challenges: challengesCompleted + 1,
         levelUp: level,
       };
@@ -245,14 +246,14 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
       levelUp();
 
       let form = {
-        xp: number,
+        xp: finalExperience,
         challenges: challengesCompleted + 1,
         levelUp: level + 1,
       };
       updateDatesChallenger(form);
     } else {
       let form = {
-        xp: number,
+        xp: finalExperience,
         challenges: challengesCompleted + 1,
         levelUp: level,
       };
