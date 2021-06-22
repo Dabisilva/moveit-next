@@ -63,17 +63,19 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     "moveit:challengesCompleted": cookieChallengeCompleted,
   } = parseCookies();
   const [level, setLevel] = useState<number>(Number(cookieLevel));
+
+  const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
+
   const [currentExperience, setCurrentExperience] = useState<number>(
-    Number(cookieCurrentExperience)
+    Number(cookieCurrentExperience) - experienceToNextLevel
   );
+
   const [challengesCompleted, setChallengesCompleted] = useState<number>(
     Number(cookieChallengeCompleted)
   );
   const [activeChallenge, setActiveChallenge] = useState(null);
 
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
-
-  const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
 
   useEffect(() => {
     Notification.requestPermission();
