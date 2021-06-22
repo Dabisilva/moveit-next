@@ -52,6 +52,7 @@ export default function createAccount() {
       email: removeSpaces(email),
       senha: password,
     };
+    toast.warn("carregando...");
     await api
       .post("create", form)
       .then((response) => {

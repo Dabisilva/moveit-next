@@ -63,14 +63,16 @@ export default function ReactionTime() {
 
   function handleReactionTime() {
     if (!activeChallenge) {
-      startNormalChallenge();
+      startNormalChallenge("challenge");
+      setAvarageBoolean(false)
+      setCountTypeTime(1)
     }
     setStart(true);
     setTimeout(() => {
       setStart(false);
       setClick(true);
       startCountdown();
-    }, 1000);
+    }, 5000);
   }
 
   function handleResetAndStart() {
