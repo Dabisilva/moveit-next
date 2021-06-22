@@ -5,5 +5,6 @@ module.exports = {
     GOOGLE_CLIENT_ID:
       "405023995497-khu1ll0ka41dcea5hqd7nr16i5ibo51p.apps.googleusercontent.com",
     GOOGLE_CLIENT_SECRET: "BPljFzy0-5hb0YbKB9B-Sa8Q",
+    NEXTAUTH_URL: "https://moveit-next-trabalho.vercel.app",
   },
 };
