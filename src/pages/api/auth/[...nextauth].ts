@@ -5,13 +5,13 @@ import { api } from "../../../services/api";
 export default NextAuth({
   providers: [
     Providers.GitHub({
-      clientId: "a8f7d6a2c442e97086ff",
-      clientSecret: "603e80203a901959719bee474f8ac61a21955b4b",
+      clientId: process.env.GITHUB_CLIENT_ID_PRODUCTION,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET_PRODUCTION,
       scope: "read:user",
     }),
     Providers.Google({
-      clientId: "405023995497-b1jq72tn0a3oes8c6l90rcc6144qssfu.apps.googleusercontent.com",
-      clientSecret: "updqbqaS6kNNMek5X5nBIpKG",
+      clientId: process.env.GOOGLE_CLIENT_ID_PRODUCTION,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET_PRODUCTION,
     }),
   ],
   callbacks: {
