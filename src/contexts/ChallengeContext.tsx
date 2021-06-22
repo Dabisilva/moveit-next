@@ -149,7 +149,7 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
       updateDatesChallenger(form);
     } else {
       let form = {
-        xp: finalExperience,
+        xp: amount,
         challenges: challengesCompleted + 1,
         levelUp: level,
       };
@@ -181,7 +181,7 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
       levelUp();
 
       let form = {
-        xp: finalExperience,
+        xp: number,
         challenges: challengesCompleted + 1,
         levelUp: level + 1,
       };
@@ -219,7 +219,7 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
       updateDatesChallenger(form);
     } else {
       let form = {
-        xp: finalExperience,
+        xp: number,
         challenges: challengesCompleted + 1,
         levelUp: level,
       };
@@ -243,7 +243,7 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
       levelUp();
 
       let form = {
-        xp: finalExperience,
+        xp: number,
         challenges: challengesCompleted + 1,
         levelUp: level + 1,
       };
