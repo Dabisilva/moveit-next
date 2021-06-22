@@ -106,9 +106,9 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
 
   async function startNewChallenge() {
     try {
-      const response = await api.get("challenges")
-    
-      const challenge = response.data
+      const response = await api.get("challenges");
+
+      const challenge = response.data;
 
       setActiveChallenge(challenge);
 
@@ -137,18 +137,17 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     const { amount } = activeChallenge;
     let finalExperience = currentExperience + amount;
 
-
     if (finalExperience >= experienceToNextLevel) {
       finalExperience = finalExperience - experienceToNextLevel;
       levelUp();
 
       let form = {
-        xp: finalExperience,
+        xp: amount,
         challenges: challengesCompleted + 1,
         levelUp: level + 1,
       };
       updateDatesChallenger(form);
-    }else {
+    } else {
       let form = {
         xp: finalExperience,
         challenges: challengesCompleted + 1,
@@ -187,9 +186,9 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
         levelUp: level + 1,
       };
       updateDatesChallenger(form);
-    }else {
+    } else {
       let form = {
-        xp: finalExperience,
+        xp: number,
         challenges: challengesCompleted + 1,
         levelUp: level,
       };
@@ -213,12 +212,12 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
       levelUp();
 
       let form = {
-        xp: finalExperience,
+        xp: number,
         challenges: challengesCompleted + 1,
         levelUp: level + 1,
       };
       updateDatesChallenger(form);
-    }else {
+    } else {
       let form = {
         xp: finalExperience,
         challenges: challengesCompleted + 1,
@@ -249,9 +248,9 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
         levelUp: level + 1,
       };
       updateDatesChallenger(form);
-    }else {
+    } else {
       let form = {
-        xp: finalExperience,
+        xp: number,
         challenges: challengesCompleted + 1,
         levelUp: level,
       };
