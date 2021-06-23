@@ -8,7 +8,6 @@ import {
 import { setCookie, parseCookies, destroyCookie } from "nookies";
 import { api } from "../services/api";
 import Router from "next/router";
-import { signOut as NextSignOut } from "next-auth/client";
 import { toast } from "react-toastify";
 
 type User = {
@@ -106,7 +105,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   function signOut() {
-    NextSignOut();
     destroyCookie(undefined, "moveit:user");
     destroyCookie(undefined, "moveit:level");
     destroyCookie(undefined, "moveit:currentExperience");
