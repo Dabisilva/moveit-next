@@ -18,6 +18,7 @@ export function UpdateUser() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
+    toast.warn("carregando...");
     let form = {
       id: user.id,
       nome: name,
